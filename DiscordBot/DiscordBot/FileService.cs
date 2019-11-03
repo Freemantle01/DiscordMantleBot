@@ -37,7 +37,7 @@ namespace DiscordBot
         }
         public async Task<int> GetRandomNumber(int minValue, int maxValue)
         {
-            Random rng = new Random(10);
+            Random rng = new Random();
             await Task.CompletedTask;
             return rng.Next(minValue, maxValue + 1);
         }
