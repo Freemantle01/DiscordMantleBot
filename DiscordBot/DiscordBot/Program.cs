@@ -33,7 +33,9 @@ namespace DiscordBot
                 .AddSingleton(_client)
                 .AddSingleton(_commands)
                 .AddSingleton<CommandHandler>()
+                .AddSingleton<FileService>()
                 .BuildServiceProvider();
+
             await service.GetService<CommandHandler>().InstallCommandsAsync();
             await _client.LoginAsync(TokenType.Bot, GetBotToken());
             await _client.StartAsync();
