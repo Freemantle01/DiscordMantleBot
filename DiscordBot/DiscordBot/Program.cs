@@ -34,6 +34,7 @@ namespace DiscordBot
                 .AddSingleton(_commands)
                 .AddSingleton<CommandHandler>()
                 .AddSingleton<FileService>()
+                .AddSingleton<ChannelMessages>()
                 .BuildServiceProvider();
 
             await service.GetService<CommandHandler>().InstallCommandsAsync();

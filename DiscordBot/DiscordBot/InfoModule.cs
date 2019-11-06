@@ -10,6 +10,7 @@ namespace DiscordBot
     public class InfoModule : ModuleBase<SocketCommandContext>
     {
         public FileService Video { get; set; }
+        public ChannelMessages Messages { get; set; }
 
         [Command("ping", RunMode = RunMode.Async)]
         [Summary("replaying to ping")]
@@ -34,6 +35,14 @@ namespace DiscordBot
                 await Context.Channel.SendMessageAsync("Ups error 😢");
             else
                 await Context.Channel.SendFileAsync(path);
+        }
+        [Command("delete",RunMode=RunMode.Async)]
+        [Summary("deletes messeges")]
+        [RequireContext(ContextType.Guild)]
+        [RequireUserPermission(Discord.GuildPermission.Administrator)]
+        public async Task DeleteMesseges(byte quantity)
+        {
+            await Messages.DeleteMesseges(quantity, Context.Channel);
         }
         
     }
