@@ -44,6 +44,12 @@ namespace DiscordBot
         {
             await Messages.DeleteMesseges(quantity, Context.Channel);
         }
-        
+        [Command("recenzja",RunMode=RunMode.Async)]
+        [Summary("gets review from website")]
+        public async Task GetReview()
+        {
+           
+            await Context.Channel.SendMessageAsync(await WebScraping.GetReview());
+        }
     }
 }
