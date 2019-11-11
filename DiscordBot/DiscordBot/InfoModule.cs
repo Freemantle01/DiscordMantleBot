@@ -46,10 +46,9 @@ namespace DiscordBot
         }
         [Command("recenzja",RunMode=RunMode.Async)]
         [Summary("gets review from website")]
-        public async Task GetReview()
-        {
-           
-            await Context.Channel.SendMessageAsync(await WebScraping.GetReview());
+        public async Task GetReview([Remainder]string author="")
+        {        
+            await Context.Channel.SendMessageAsync(await WebScraping.GetReview(author));
         }
     }
 }
