@@ -2,6 +2,7 @@
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -35,6 +36,8 @@ namespace DiscordBot
 
         public async Task MainAsync()
         {
+            SetupLogger();
+
             _client = new DiscordSocketClient();
             _commands = new CommandService();
             _client.Log += Log;
@@ -53,6 +56,13 @@ namespace DiscordBot
 
 
             await Task.Delay(-1);
+        }
+
+        private void SetupLogger()
+        {
+            Serilog.Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger();
         }
 
         public static string GetBotToken()

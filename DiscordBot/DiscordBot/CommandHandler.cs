@@ -4,6 +4,7 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace DiscordBot
 {
@@ -12,6 +13,7 @@ namespace DiscordBot
         private readonly DiscordSocketClient _client;
         private readonly CommandService _commands;
         private readonly IServiceProvider _service;
+        private static readonly ILogger _logger = Log.ForContext<CommandHandler>();
 
         public CommandHandler(IServiceProvider service)
         {
@@ -77,11 +79,11 @@ namespace DiscordBot
             {
                 await context.Channel.SendMessageAsync(result.ErrorReason);
 
-                Console.WriteLine(result.ErrorReason);
+                _logger.Error($"Eerror while processing command. Error: {result.ErrorReason}");
             }
             else
             {                
-                Console.WriteLine($"Procced message from username: {message.Author.Username} Message content: {message.Content}");
+                _logger.Information($"Procced message from username: {message.Author.Username} Message content: {message.Content}");
             }
         }
     }
