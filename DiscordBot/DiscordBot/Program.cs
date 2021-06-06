@@ -1,13 +1,12 @@
-﻿using System;
-using Discord.Net;
-using System.Threading.Tasks;
-using Discord;
-using Discord.WebSocket;
-using System.IO;
+﻿using Discord;
 using Discord.Commands;
+using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
-//https://discord.foxbot.me
+
 namespace DiscordBot
 {
     public class Program
@@ -15,14 +14,25 @@ namespace DiscordBot
         private DiscordSocketClient _client;
         private CommandService _commands;
         private IServiceProvider service;
+
         public static void Main(string[] args)
-            => new Program().MainAsync().GetAwaiter().GetResult();
+        {
+            try
+            {
+                new Program().MainAsync().GetAwaiter().GetResult();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Failed to start bot. Error message: {e?.Message}");
+            }
+        }
 
         private Task Log(LogMessage msg)
         {
             Console.WriteLine(msg.ToString());
             return Task.CompletedTask;
         }
+
         public async Task MainAsync()
         {
             _client = new DiscordSocketClient();
@@ -44,6 +54,7 @@ namespace DiscordBot
 
             await Task.Delay(-1);
         }
+
         public static string GetBotToken()
         {
             var tokenFilePath = Path.Combine(Directory.GetCurrentDirectory(), "bot_token/token.txt");
@@ -52,8 +63,6 @@ namespace DiscordBot
                 return file.ReadToEnd();
             }
         }
-
-
     }
 }
 

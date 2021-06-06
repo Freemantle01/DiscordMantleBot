@@ -1,8 +1,5 @@
 ﻿using Discord.Commands;
-using Discord.WebSocket;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DiscordBot
@@ -21,10 +18,12 @@ namespace DiscordBot
         [Summary("returns current time and date")]
         public async Task GetCurrentDate()
             => await Context.Channel.SendMessageAsync(DateTime.Now.ToString());
+
         [Command("frugo", RunMode = RunMode.Async)]
         [Summary("saying stuff using tts")]
         public async Task SayStuffAboutFrugo([Remainder]string text)
             => await Context.Channel.SendMessageAsync( text, isTTS: true);
+
         [Command("ylyl", RunMode=RunMode.Async)]
         [Summary("adding video file to channel")]
         [RequireContext(ContextType.Guild)]
@@ -32,10 +31,15 @@ namespace DiscordBot
         {
             var path = await Video.GetVideoFilePath();
             if (path == null)
+            {
                 await Context.Channel.SendMessageAsync("Ups error 😢");
+            }
             else
+            {
                 await Context.Channel.SendFileAsync(path);
+            }
         }
+
         [Command("delete",RunMode=RunMode.Async)]
         [Summary("deletes messeges")]
         [RequireContext(ContextType.Guild)]
@@ -44,6 +48,7 @@ namespace DiscordBot
         {
             await Messages.DeleteMesseges(quantity, Context.Channel);
         }
+
         [Command("recenzja",RunMode=RunMode.Async)]
         [Summary("gets review from website")]
         public async Task GetReview([Remainder]string author="")
